@@ -24,4 +24,39 @@ void main() {
       isEmpty,
     );
   });
+  testWidgets('공백은 보내지 않고 키보드 전송을 지원한다', (tester) async {
+    await tester.pumpWidget(const ChatLabApp());
+    await tester.enterText(find.byType(TextField), '   ');
+    await tester.tap(find.byTooltip('전송'));
+    await tester.pump();
+    expect(
+      tester
+          .widget<ListView>(find.byType(ListView))
+          .childrenDelegate
+          .estimatedChildCount,
+      4,
+    );
+    await tester.enterText(find.byType(TextField), '  keyboard message  ');
+    await tester.testTextInput.receiveAction(TextInputAction.send);
+    await tester.pump();
+    expect(find.text('keyboard message'), findsOneWidget);
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).controller!.text,
+      isEmpty,
+    );
+  });
+
+  testWidgets('키보드가 올라와도 입력창이 보인다', (tester) async {
+    await tester.pumpWidget(const ChatLabApp());
+    tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+    addTearDown(tester.view.resetViewInsets);
+    await tester.pumpAndSettle();
+    final keyboardTop =
+        (tester.view.physicalSize.height - 300) / tester.view.devicePixelRatio;
+    expect(
+      tester.getBottomRight(find.byType(TextField)).dy,
+      lessThanOrEqualTo(keyboardTop),
+    );
+    expect(tester.takeException(), isNull);
+  });
 }
