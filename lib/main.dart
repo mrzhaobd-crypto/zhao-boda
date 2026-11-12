@@ -35,8 +35,9 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  /// 실습용 가짜 대화 — API를 붙이기 전까지 이 목록으로 화면을 만든다.
   final _controller = TextEditingController();
+
+  /// 실습용 가짜 대화 — API를 붙이기 전까지 이 목록으로 화면을 만든다.
   final List<ChatMessage> _messages = [
     ChatMessage(text: '오늘 뭐 배워?', isUser: true),
     ChatMessage(text: 'AI 챗봇에 움직이는 응답을 붙입니다.', isUser: false),
@@ -46,8 +47,13 @@ class _ChatPageState extends State<ChatPage> {
 
   void _send() {
     final text = _controller.text.trim();
-    if (text.isEmpty) return;
-    setState(() => _messages.add(ChatMessage(text: text, isUser: true)));
+    if (text.isEmpty) {
+      return;
+    }
+
+    setState(() {
+      _messages.add(ChatMessage(text: text, isUser: true));
+    });
     _controller.clear();
   }
 
@@ -91,7 +97,9 @@ class _ChatPageState extends State<ChatPage> {
                     child: TextField(
                       controller: _controller,
                       textInputAction: TextInputAction.send,
-                      onSubmitted: (_) => _send(),
+                      onSubmitted: (value) {
+                        _send();
+                      },
                       decoration: const InputDecoration(
                         hintText: '메시지를 입력하세요',
                         border: OutlineInputBorder(),
@@ -121,25 +129,27 @@ class _Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isUser = message.isUser;
+
     return Align(
-      alignment: message.isUser ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         constraints: const BoxConstraints(maxWidth: 420),
         decoration: BoxDecoration(
-          color: message.isUser
-              ? colors.primaryContainer
-              : colors.surfaceContainerHighest,
+          color: isUser
+              ? colorScheme.primaryContainer
+              : colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(14),
         ),
         child: Text(
           message.text,
           style: TextStyle(
-            color: message.isUser
-                ? colors.onPrimaryContainer
-                : colors.onSurface,
+            color: isUser
+                ? colorScheme.onPrimaryContainer
+                : colorScheme.onSurface,
           ),
         ),
       ),
