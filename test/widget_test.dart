@@ -14,7 +14,14 @@ void main() {
     expect(find.byType(ListView), findsOneWidget);
     expect(find.text('오늘 뭐 배워?'), findsOneWidget);
 
-    // 아직 입력창은 TODO 상태다
-    expect(find.textContaining('TODO 3'), findsOneWidget);
+    expect(find.byType(TextField), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'Hello');
+    await tester.tap(find.byTooltip('전송'));
+    await tester.pump();
+    expect(find.text('Hello'), findsOneWidget);
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).controller!.text,
+      isEmpty,
+    );
   });
 }
