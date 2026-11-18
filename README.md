@@ -79,14 +79,14 @@ test/widget_test.dart  ← 앱이 뜨는지 확인하는 스모크 테스트
 
 사용자 메시지는 오른쪽, 응답은 왼쪽에 표시됩니다. 화면 아래에는 입력창과 전송 버튼이 있습니다.
 
-[![채팅 UI: 좌우 말풍선과 하단 입력창](docs/chat-ui.png)](docs/chat-ui.png)
+[![채팅 UI: 좌우 말풍선과 하단 입력창](docs/chat-ui-cropped.png)](docs/chat-ui-cropped.png)
 
 #### 2. 500 오류와 재시도 버튼
 
 상단에서 `500 서버 오류`를 선택하고 `오류가 나면 어떻게 하나요?`를 전송했습니다.
 오류 안내와 `다시 시도` 버튼이 남아 있어 다시 요청할 수 있습니다.
 
-[![500 오류: 오류 안내와 다시 시도 버튼](docs/error.png)](docs/error.png)
+[![500 오류: 오류 안내와 다시 시도 버튼](docs/error-cropped.png)](docs/error-cropped.png)
 
 #### 3. 재시도 성공
 
@@ -94,4 +94,4 @@ test/widget_test.dart  ← 앱이 뜨는지 확인하는 스모크 테스트
 오류 안내가 사라지고 마지막 메시지의 모의 응답이 표시됩니다.
 같은 사용자 메시지가 두 번 추가되지 않는 것도 확인할 수 있습니다.
 
-[![재시도 성공: 마지막 메시지에 대한 모의 응답](docs/retry-success.png)](docs/retry-success.png)
+[![재시도 성공: 마지막 메시지에 대한 모의 응답](docs/retry-success-cropped.png)](docs/retry-success-cropped.png)
